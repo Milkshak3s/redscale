@@ -21,11 +21,12 @@ def activeTargets():
 
     active_targets = []
     for key in r.scan_iter("*"):
+        last_active = r.get(key).decode()
         target = {
-            'id': key,
-            'last_active': r.get(key)
+            'id': int(key.decode()),
+            'last_active': last_active
         }
-        active_targets.append()
+        active_targets.append(target)
 
     return jsonify(active_targets)
 

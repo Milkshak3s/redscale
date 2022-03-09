@@ -2,3 +2,4 @@ sqlalchemy
 pymysql
 pika
 cryptography
+redis

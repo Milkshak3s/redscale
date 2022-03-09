@@ -1,6 +1,7 @@
 import json
 import os
 import pika
+import redis
 import sys
 import time
 
@@ -19,6 +20,18 @@ MYSQL_USER = os.getenv('MYSQL_USER')
 MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
 MYSQL_ROOT_PASSWORD = os.getenv('MYSQL_ROOT_PASSWORD')
 MYSQL_DATABASE = os.getenv('MYSQL_DATABASE')
+
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_PORT = int(os.getenv('REDIS_PORT'))
+REDIS_PASS = os.getenv('REDIS_PASS')
+
+
+def write_redis_value(key, value):
+    r = redis.Redis(
+            host=REDIS_HOST,
+            port=REDIS_PORT, 
+            password=REDIS_PASS)
+    r.set(key, value)
 
 
 def main():
@@ -48,11 +61,15 @@ def main():
         session = Session()
 
         sql_target = session.query(Target).get(target_id)
-        sql_target.last_active = target_last_active
-        if target_name != '':
-            sql_target.name = target_name
+        if sql_target is None:
+            sql_target = Target(id=target_id, name=target_name, last_active=target_last_active)
+        else:
+            sql_target.last_active = target_last_active
+            if target_name != '':
+                sql_target.name = target_name
 
         session.commit()
+        write_redis_value(target_id, target_last_active)
     
     rmq_channel.basic_consume(queue=RMQ_TARGET_QUEUE, on_message_callback=callback, auto_ack=True)
     rmq_channel.start_consuming()
