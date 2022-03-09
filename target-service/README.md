@@ -20,7 +20,7 @@ Returns:
 - A JSON list of active targets
 
 ### Target
-```GET http://localhost:9000/checkIn?id=[IMPLANT_ID]```  
+```GET http://localhost:9000/target?id=[IMPLANT_ID]```  
 Side Effects:
 - None  
 Returns:
