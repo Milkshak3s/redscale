@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+
+  api-activetargets:
+    build: ./api-activetargets
+    command: python app.py
+    ports:
+      - 8080:5000
+    env_file:
+      - service_vars.env
+  
+  api-target:
+    build: api-target
+    command: python app.py
+    ports:
+      - 81:5000
+    env_file:
+      - service_vars.env
+
+  api-checkin:
+    build: api-checkin
+    command: python app.py
+    ports:
+      - 80:5000
+    env_file:
+      - service_vars.env
+  
+  worker-writer:
+    build: worker-writer
+    command: python app.py
+    depends_on:
+      - rabbitmq
+    env_file:
+      - service_vars.env
+
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    command: redis-server --loglevel warning
+  
+  mysql:
+    image: mysql:8.0.28-oracle
+    # volumes:
+    #   - ~/apps/mysql:/var/lib/mysql
+    env_file:
+      - service_vars.env
+  
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+        # web UI, NOT FOR PROD
+        - 15672:15672
