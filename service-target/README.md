@@ -1,6 +1,6 @@
 # Target Service
 ```
-cd target-service
+cd service-target
 docker-compose build && docker-compose up -d
 ```  
 

@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  api-commandhistory:
+    build: ./api-commandhistory
+    command: python app.py
+    ports:
+      - 10000:5000
+    env_file:
+      - service_vars.env
+  
+  api-addcommand:
+    build: ./api-addcommand
+    command: python app.py
+    ports:
+      - 11000:5000
+    env_file:
+      - service_vars.env
+  
+  api-nextcommand:
+    build: ./api-nextcommand
+    command: python app.py
+    ports:
+      - 12000:5000
+    env_file:
+      - service_vars.env
+
+  mysql:
+    image: mysql:8.0.28-oracle
+    # volumes:
+    #   - ~/apps/mysql:/var/lib/mysql
+    env_file:
+      - service_vars.env
+  
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+        # web UI, NOT FOR PROD
+        - 15673:15672

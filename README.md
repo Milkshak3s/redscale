@@ -2,7 +2,7 @@
 But it  --||  S C A L E S  ||--
 
 
-## target-service
+## service-target
 Provides endpoints for managing active implants
 
 Features:
@@ -11,8 +11,10 @@ Features:
 - `localhost:9000/target` - Users to get information about a single target
 
 
-## command-service
-Provides endpoints for managing c2-side implant commands
+## service-command
+Provides endpoints for managing implant commands
 
 Features:
-- *soon* (tm)
+- `localhost:12000/nextCommand` - Implants to get the next command to execute
+- `localhost:10000/commandHistory` - Users to get a list of all commands logged
+- `localhost:11000/addCommand` - Users to upload new commands for implants to consume
