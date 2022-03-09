@@ -26,4 +26,7 @@ Side Effects:
 - Consumes a command from the queue
 - Updates command's pending status in DB
 Returns:
-- A JSON representation of the next command, if available
+- A JSON representation of the next command, if available  
+  
+  
+![system_command-service](../images/system_command-service.png)

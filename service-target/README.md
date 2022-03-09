@@ -24,4 +24,7 @@ Returns:
 Side Effects:
 - None  
 Returns:
-- Returns a JSON representation of a target
+- Returns a JSON representation of a target  
+  
+  
+![system_target-service](../images/system_target-service.png)
