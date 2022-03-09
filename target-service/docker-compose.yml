@@ -5,7 +5,7 @@ services:
     build: ./api-activetargets
     command: python app.py
     ports:
-      - 8080:5000
+      - 6000:5000
     env_file:
       - service_vars.env
   
@@ -13,7 +13,7 @@ services:
     build: api-target
     command: python app.py
     ports:
-      - 81:5000
+      - 7000:5000
     env_file:
       - service_vars.env
 
