@@ -33,12 +33,13 @@ def activeTargets():
     # send changes to write into queue
     rmq = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
     rmq_channel = rmq.channel()
+    rmq_channel.queue_declare(queue=RMQ_TARGET_QUEUE)
 
     try:
-        rmq_channel.queue_declare(queue=RMQ_TARGET_QUEUE)
         rmq_channel.basic_publish(exchange='', routing_key=RMQ_TARGET_QUEUE, body=json.dumps(target_update))
         rmq.close()
     except:
+        rmq.close()
         return "Failed to send", 400
     
     # pull next command (if available)

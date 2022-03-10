@@ -4,6 +4,7 @@ services:
   api-activetargets:
     build: ./api-activetargets
     command: python app.py
+    restart: always
     ports:
       - 8000:5000
     env_file:
@@ -12,6 +13,7 @@ services:
   api-target:
     build: api-target
     command: python app.py
+    restart: always
     ports:
       - 9000:5000
     env_file:
@@ -19,15 +21,17 @@ services:
 
   api-checkin:
     build: api-checkin
-    command: python app.py
+    command: gunicorn -b 0.0.0.0 -w 4 app:app
+    restart: always
     ports:
-      - 80:5000
+      - 80:8000
     env_file:
       - service_vars.env
   
   worker-writer:
     build: worker-writer
     command: python app.py
+    restart: always
     depends_on:
       - rabbitmq
     env_file:

@@ -35,9 +35,7 @@ def nextCommand():
     # TODO: Really need to put the mysql writer in a different service, lots of reads on this need to be *fast*
     command = None
     method_frame, header_frame, body = rmq_channel.basic_get(queue=rmq_queue)
-    if method_frame is None:
-        return jsonify(command)
-    elif method_frame is not None and method_frame.NAME == 'Basic.GetEmpty':
+    if method_frame is None or method_frame.NAME == 'Basic.GetEmpty':
         rmq.close()
     else:
         rmq_channel.basic_ack(delivery_tag=method_frame.delivery_tag)
