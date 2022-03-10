@@ -32,6 +32,7 @@ def nextCommand():
     rmq_channel = rmq.channel()
     rmq_channel.queue_declare(queue=rmq_queue)
 
+    # TODO: Really need to put the mysql writer in a different service, lots of reads on this need to be *fast*
     command = None
     method_frame, header_frame, body = rmq_channel.basic_get(queue=rmq_queue)
     if method_frame is None:

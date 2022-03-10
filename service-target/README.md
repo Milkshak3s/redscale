@@ -10,7 +10,7 @@ docker-compose build && docker-compose up -d
 Side Effects:
 - PUTs target in DB, updates active targets
 Returns:
-- A JSON list of active targets
+- A the next command for this host in JSON, if available
 
 ### Active Targets
 ```GET http://localhost:8000/activeTargets```  
